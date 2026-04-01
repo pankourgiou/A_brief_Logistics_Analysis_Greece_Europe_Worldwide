@@ -1,0 +1,1 @@
+A brief logistics -stats analysis for Greece/Europe and in a worldwide scale..it's not my sector but I plan to learn somethings so that I move a bit more easily...I think Artificial Intelligence is one lesson logistics is another one..one I would like to learn...copy-paste the code and save it as .html double click the file and read the logistics stats analysis!!
