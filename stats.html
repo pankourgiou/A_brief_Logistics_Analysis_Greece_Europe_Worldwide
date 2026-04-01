@@ -1,0 +1,1705 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Global Logistics Intelligence Report 2024</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,600;1,300&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+  :root {
+    --ink: #0a0a0f;
+    --paper: #f5f0e8;
+    --rust: #c94a2b;
+    --ocean: #1a4d6e;
+    --gold: #d4a017;
+    --steel: #8a9bb0;
+    --pale: #e8e2d6;
+    --white: #fafaf7;
+    --mono: 'IBM Plex Mono', monospace;
+    --sans: 'IBM Plex Sans', sans-serif;
+    --display: 'Bebas Neue', sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--ink);
+    color: var(--paper);
+    font-family: var(--sans);
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  /* ── HERO ─────────────────────────────── */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 6rem 4rem 4rem;
+    overflow: hidden;
+    background: var(--ink);
+  }
+
+  .hero-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(26,77,110,0.15) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(26,77,110,0.15) 1px, transparent 1px);
+    background-size: 60px 60px;
+    animation: gridPulse 8s ease-in-out infinite;
+  }
+
+  @keyframes gridPulse {
+    0%,100% { opacity: 0.5; }
+    50% { opacity: 1; }
+  }
+
+  .hero-noise {
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    opacity: 0.3;
+  }
+
+  .hero-accent {
+    position: absolute;
+    top: 0; right: 0;
+    width: 45%;
+    height: 100%;
+    background: linear-gradient(135deg, transparent 40%, rgba(201,74,43,0.08) 100%);
+  }
+
+  .hero-content { position: relative; z-index: 2; max-width: 1200px; }
+
+  .report-tag {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.25em;
+    color: var(--rust);
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .report-tag::before {
+    content: '';
+    display: block;
+    width: 40px;
+    height: 1px;
+    background: var(--rust);
+  }
+
+  h1 {
+    font-family: var(--display);
+    font-size: clamp(4rem, 10vw, 10rem);
+    line-height: 0.92;
+    letter-spacing: 0.02em;
+    color: var(--paper);
+    margin-bottom: 1.5rem;
+  }
+
+  h1 span { color: var(--rust); }
+
+  .hero-sub {
+    font-size: 1.1rem;
+    font-weight: 300;
+    color: var(--steel);
+    max-width: 600px;
+    line-height: 1.7;
+    margin-bottom: 3rem;
+  }
+
+  .hero-stats-row {
+    display: flex;
+    gap: 3rem;
+    flex-wrap: wrap;
+  }
+
+  .hero-stat {
+    border-left: 2px solid var(--rust);
+    padding-left: 1.2rem;
+  }
+
+  .hero-stat .num {
+    font-family: var(--display);
+    font-size: 2.8rem;
+    line-height: 1;
+    color: var(--paper);
+  }
+
+  .hero-stat .lbl {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    color: var(--steel);
+    text-transform: uppercase;
+    margin-top: 0.3rem;
+  }
+
+  /* ── SECTIONS ─────────────────────────── */
+  section {
+    padding: 6rem 4rem;
+    max-width: 1300px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.3em;
+    color: var(--rust);
+    text-transform: uppercase;
+    margin-bottom: 0.6rem;
+  }
+
+  h2 {
+    font-family: var(--display);
+    font-size: clamp(2.5rem, 5vw, 5rem);
+    line-height: 1;
+    color: var(--paper);
+    margin-bottom: 1rem;
+  }
+
+  h2 em { font-style: normal; color: var(--gold); }
+
+  .section-desc {
+    color: var(--steel);
+    font-size: 0.95rem;
+    line-height: 1.75;
+    max-width: 650px;
+    margin-bottom: 3.5rem;
+  }
+
+  /* ── DIVIDER ──────────────────────────── */
+  .divider {
+    border: none;
+    border-top: 1px solid rgba(138,155,176,0.2);
+    margin: 0;
+  }
+
+  /* ── CHART GRID ───────────────────────── */
+  .chart-grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    background: rgba(138,155,176,0.1);
+    border: 1px solid rgba(138,155,176,0.15);
+    margin-bottom: 2px;
+  }
+
+  .chart-grid-3 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 2px;
+    background: rgba(138,155,176,0.1);
+    border: 1px solid rgba(138,155,176,0.15);
+    margin-bottom: 2px;
+  }
+
+  .chart-grid-1-2 {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 2px;
+    background: rgba(138,155,176,0.1);
+    border: 1px solid rgba(138,155,176,0.15);
+    margin-bottom: 2px;
+  }
+
+  .chart-box {
+    background: #0e0e14;
+    padding: 2rem;
+    position: relative;
+  }
+
+  .chart-box-title {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.15em;
+    color: var(--steel);
+    text-transform: uppercase;
+    margin-bottom: 0.4rem;
+  }
+
+  .chart-box-headline {
+    font-family: var(--display);
+    font-size: 1.6rem;
+    color: var(--paper);
+    margin-bottom: 1.5rem;
+  }
+
+  .chart-wrap {
+    position: relative;
+    height: 260px;
+  }
+
+  .chart-wrap-tall {
+    position: relative;
+    height: 340px;
+  }
+
+  /* ── DATA CARDS ───────────────────────── */
+  .kpi-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2px;
+    background: rgba(138,155,176,0.1);
+    border: 1px solid rgba(138,155,176,0.15);
+    margin-bottom: 4rem;
+  }
+
+  .kpi-card {
+    background: #0e0e14;
+    padding: 2rem 1.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .kpi-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0;
+    height: 2px;
+    width: var(--w, 60%);
+    background: var(--c, var(--rust));
+  }
+
+  .kpi-icon {
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+  }
+
+  .kpi-value {
+    font-family: var(--display);
+    font-size: 2.8rem;
+    line-height: 1;
+    color: var(--paper);
+    margin-bottom: 0.3rem;
+  }
+
+  .kpi-label {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    color: var(--steel);
+    text-transform: uppercase;
+    line-height: 1.5;
+  }
+
+  .kpi-change {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    margin-top: 0.6rem;
+    color: #5aab7a;
+  }
+
+  .kpi-change.neg { color: var(--rust); }
+
+  /* ── TABLE ────────────────────────────── */
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: var(--mono);
+    font-size: 0.78rem;
+  }
+
+  .data-table thead tr {
+    border-bottom: 1px solid rgba(138,155,176,0.3);
+  }
+
+  .data-table th {
+    text-align: left;
+    padding: 0.8rem 1rem;
+    color: var(--steel);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-size: 0.65rem;
+    font-weight: 600;
+  }
+
+  .data-table td {
+    padding: 0.75rem 1rem;
+    color: var(--paper);
+    border-bottom: 1px solid rgba(138,155,176,0.08);
+    vertical-align: middle;
+  }
+
+  .data-table tr:hover td { background: rgba(26,77,110,0.15); }
+
+  .rank-num {
+    font-family: var(--display);
+    font-size: 1.3rem;
+    color: rgba(138,155,176,0.4);
+  }
+
+  .bar-cell { display: flex; align-items: center; gap: 0.8rem; }
+
+  .mini-bar {
+    height: 4px;
+    border-radius: 2px;
+    background: var(--ocean);
+    transition: width 1s ease;
+  }
+
+  .mini-bar.rust { background: var(--rust); }
+  .mini-bar.gold { background: var(--gold); }
+
+  .tag {
+    display: inline-block;
+    padding: 0.2rem 0.6rem;
+    border-radius: 2px;
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    font-weight: 600;
+  }
+
+  .tag-ocean { background: rgba(26,77,110,0.4); color: #7dc2e8; }
+  .tag-rust { background: rgba(201,74,43,0.3); color: #f08060; }
+  .tag-gold { background: rgba(212,160,23,0.3); color: #e8c84a; }
+  .tag-green { background: rgba(90,171,122,0.3); color: #8fd4a8; }
+
+  /* ── GREECE SPOTLIGHT ────────────────── */
+  .spotlight-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 2px;
+    background: rgba(138,155,176,0.1);
+    border: 1px solid rgba(138,155,176,0.15);
+  }
+
+  .spotlight-left {
+    background: #0e0e14;
+    padding: 2.5rem;
+  }
+
+  .spotlight-right {
+    background: #0e0e14;
+    padding: 2rem;
+  }
+
+  .metric-list { list-style: none; margin-top: 1.5rem; }
+
+  .metric-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.9rem 0;
+    border-bottom: 1px solid rgba(138,155,176,0.1);
+    font-size: 0.85rem;
+    color: var(--steel);
+  }
+
+  .metric-list li:last-child { border-bottom: none; }
+
+  .metric-list .metric-name { color: var(--paper); }
+
+  .metric-list .metric-val {
+    font-family: var(--mono);
+    color: var(--gold);
+    font-size: 0.9rem;
+  }
+
+  /* ── WORLD MAP ────────────────────────── */
+  .world-section {
+    background: #070710;
+    border-top: 1px solid rgba(138,155,176,0.1);
+    border-bottom: 1px solid rgba(138,155,176,0.1);
+    padding: 4rem;
+  }
+
+  /* ── FOOTER ───────────────────────────── */
+  .report-footer {
+    padding: 3rem 4rem;
+    border-top: 1px solid rgba(138,155,176,0.15);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: 2rem;
+  }
+
+  .footer-brand {
+    font-family: var(--display);
+    font-size: 2rem;
+    color: var(--paper);
+    letter-spacing: 0.05em;
+  }
+
+  .footer-brand span { color: var(--rust); }
+
+  .footer-meta {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    color: var(--steel);
+    letter-spacing: 0.12em;
+    line-height: 2;
+    text-align: right;
+  }
+
+  /* ── RESPONSIVE ───────────────────────── */
+  @media (max-width: 900px) {
+    section { padding: 4rem 1.5rem; }
+    .hero { padding: 5rem 1.5rem 3rem; }
+    .chart-grid-2, .chart-grid-3, .chart-grid-1-2, .spotlight-grid { grid-template-columns: 1fr; }
+    .kpi-row { grid-template-columns: 1fr 1fr; }
+    .hero-stats-row { gap: 1.5rem; }
+    h1 { font-size: 4.5rem; }
+  }
+
+  @media (max-width: 540px) {
+    .kpi-row { grid-template-columns: 1fr; }
+  }
+
+  /* ── SCROLL REVEAL ────────────────────── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ── ANNOTATION ───────────────────────── */
+  .annotation {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    color: rgba(138,155,176,0.5);
+    margin-top: 1rem;
+    letter-spacing: 0.08em;
+  }
+
+  /* ── PROGRESS BARS ────────────────────── */
+  .prog-list { display: flex; flex-direction: column; gap: 1rem; }
+
+  .prog-item {}
+
+  .prog-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.4rem;
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    color: var(--steel);
+  }
+
+  .prog-header .pct { color: var(--paper); }
+
+  .prog-track {
+    height: 5px;
+    background: rgba(138,155,176,0.12);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+
+  .prog-fill {
+    height: 100%;
+    border-radius: 3px;
+    width: 0%;
+    transition: width 1.2s cubic-bezier(0.4,0,0.2,1);
+  }
+
+  /* scroll-driven number counter */
+  .count-up { display: inline-block; }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════ HERO ═══════════════════ -->
+<div class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-noise"></div>
+  <div class="hero-accent"></div>
+  <div class="hero-content">
+    <div class="report-tag">Global Intelligence Report · 2024 Edition</div>
+    <h1>GLOBAL<br><span>LOGISTICS</span><br>ANALYSIS</h1>
+    <p class="hero-sub">A comprehensive statistical examination of logistics infrastructure, trade flows, maritime shipping, and economic integration — from Greek ports to global supply chains across all major sectors.</p>
+    <div class="hero-stats-row">
+      <div class="hero-stat">
+        <div class="num">$11.7T</div>
+        <div class="lbl">Global Logistics Market Value</div>
+      </div>
+      <div class="hero-stat">
+        <div class="num">11.5B</div>
+        <div class="lbl">Tonnes shipped by sea / year</div>
+      </div>
+      <div class="hero-stat">
+        <div class="num">#4</div>
+        <div class="lbl">Greece — world merchant fleet</div>
+      </div>
+      <div class="hero-stat">
+        <div class="num">80%</div>
+        <div class="lbl">World trade moves by sea</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ KPIs ═══════════════════ -->
+<section class="reveal">
+  <div class="section-label">Key Performance Indicators</div>
+  <h2>SECTOR <em>OVERVIEW</em></h2>
+  <p class="section-desc">Macro-level statistics aggregating performance across maritime, road, rail, air freight, and logistics services globally.</p>
+
+  <div class="kpi-row">
+    <div class="kpi-card" style="--w:82%; --c: var(--rust)">
+      <div class="kpi-icon">🚢</div>
+      <div class="kpi-value">$3.0T</div>
+      <div class="kpi-label">Global maritime<br>trade revenue</div>
+      <div class="kpi-change">▲ +6.2% YoY</div>
+    </div>
+    <div class="kpi-card" style="--w:65%; --c: var(--ocean)">
+      <div class="kpi-icon">🚛</div>
+      <div class="kpi-value">$2.3T</div>
+      <div class="kpi-label">Road freight<br>market</div>
+      <div class="kpi-change">▲ +4.1% YoY</div>
+    </div>
+    <div class="kpi-card" style="--w:48%; --c: var(--gold)">
+      <div class="kpi-icon">✈️</div>
+      <div class="kpi-value">$192B</div>
+      <div class="kpi-label">Air cargo<br>market</div>
+      <div class="kpi-change">▲ +9.4% YoY</div>
+    </div>
+    <div class="kpi-card" style="--w:35%; --c: #5aab7a">
+      <div class="kpi-icon">🚂</div>
+      <div class="kpi-value">$240B</div>
+      <div class="kpi-label">Rail freight<br>market</div>
+      <div class="kpi-change">▲ +3.7% YoY</div>
+    </div>
+  </div>
+
+  <div class="kpi-row">
+    <div class="kpi-card" style="--w:90%; --c: var(--rust)">
+      <div class="kpi-icon">🏗️</div>
+      <div class="kpi-value">920M</div>
+      <div class="kpi-label">TEUs handled<br>globally per year</div>
+      <div class="kpi-change">▲ +7.5% YoY</div>
+    </div>
+    <div class="kpi-card" style="--w:72%; --c: var(--ocean)">
+      <div class="kpi-icon">⚓</div>
+      <div class="kpi-value">5,400+</div>
+      <div class="kpi-label">Commercial ports<br>worldwide</div>
+      <div class="kpi-change">▲ +1.2% YoY</div>
+    </div>
+    <div class="kpi-card" style="--w:55%; --c: var(--gold)">
+      <div class="kpi-icon">📦</div>
+      <div class="kpi-value">3.2B</div>
+      <div class="kpi-label">Parcels shipped<br>globally (e-commerce)</div>
+      <div class="kpi-change">▲ +18.3% YoY</div>
+    </div>
+    <div class="kpi-card" style="--w:40%; --c: #5aab7a">
+      <div class="kpi-icon">🌍</div>
+      <div class="kpi-value">160</div>
+      <div class="kpi-label">Countries in global<br>logistics network</div>
+      <div class="kpi-change">▲ +2 new 2024</div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ═══════════════════ SHIPPING ═══════════════════ -->
+<section class="reveal">
+  <div class="section-label">Maritime Sector — Deep Dive</div>
+  <h2>SHIPPING <em>DOMINANCE</em></h2>
+  <p class="section-desc">Shipping remains the backbone of global commerce. In 2024, over 11.5 billion tonnes of cargo were transported via sea — accounting for 80% of world trade by volume and 70% by value.</p>
+
+  <div class="chart-grid-1-2" style="margin-bottom: 2px;">
+    <div class="chart-box">
+      <div class="chart-box-title">Fleet capacity trend</div>
+      <div class="chart-box-headline">Global Merchant Fleet (DWT millions)</div>
+      <div class="chart-wrap-tall">
+        <canvas id="fleetTrendChart"></canvas>
+      </div>
+      <p class="annotation">Source: UNCTAD Review of Maritime Transport 2023 / Statista estimates 2024</p>
+    </div>
+    <div class="chart-box">
+      <div class="chart-box-title">Cargo composition</div>
+      <div class="chart-box-headline">Cargo Types by Volume</div>
+      <div class="chart-wrap-tall">
+        <canvas id="cargoTypeChart"></canvas>
+      </div>
+      <p class="annotation">Bulk solids include grain, coal, iron ore, bauxite, and phosphates</p>
+    </div>
+  </div>
+
+  <div class="chart-grid-3">
+    <div class="chart-box">
+      <div class="chart-box-title">Top 10 container ports</div>
+      <div class="chart-box-headline">TEUs Handled (millions)</div>
+      <div class="chart-wrap">
+        <canvas id="portsTEUChart"></canvas>
+      </div>
+    </div>
+    <div class="chart-box">
+      <div class="chart-box-title">Shipping rates</div>
+      <div class="chart-box-headline">Drewry WCI — $/40ft container</div>
+      <div class="chart-wrap">
+        <canvas id="shippingRatesChart"></canvas>
+      </div>
+    </div>
+    <div class="chart-box">
+      <div class="chart-box-title">Flag state distribution</div>
+      <div class="chart-box-headline">% World Fleet by Flag</div>
+      <div class="chart-wrap">
+        <canvas id="flagStateChart"></canvas>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ═══════════════════ GREECE ═══════════════════ -->
+<section class="reveal">
+  <div class="section-label">Greece — Maritime & Logistics Hub</div>
+  <h2>HELLAS <em>AT SEA</em></h2>
+  <p class="section-desc">Greece commands the world's largest merchant shipping fleet by deadweight tonnage — a global maritime power representing 21% of the EU fleet and 4.5% of the world total fleet capacity.</p>
+
+  <div class="spotlight-grid" style="margin-bottom: 2px;">
+    <div class="spotlight-left">
+      <div class="chart-box-title">Greek maritime metrics</div>
+      <div class="chart-box-headline" style="font-size:1.4rem; margin-bottom: 0.5rem;">Shipping Powerhouse</div>
+      <ul class="metric-list">
+        <li><span class="metric-name">Merchant fleet capacity (DWT)</span><span class="metric-val">375M+ tonnes</span></li>
+        <li><span class="metric-name">World fleet share (DWT)</span><span class="metric-val">21.3%</span></li>
+        <li><span class="metric-name">Number of vessels (1000 GT+)</span><span class="metric-val">4,700+</span></li>
+        <li><span class="metric-name">Global rank (fleet size)</span><span class="metric-val">#1 EU · #4 World</span></li>
+        <li><span class="metric-name">Tanker fleet share</span><span class="metric-val">28% (world #1)</span></li>
+        <li><span class="metric-name">Bulk carrier fleet share</span><span class="metric-val">19% (world #2)</span></li>
+        <li><span class="metric-name">Shipping contribution to GDP</span><span class="metric-val">~7.5% (~€15B)</span></li>
+        <li><span class="metric-name">Employed seafarers</span><span class="metric-val">~25,000 Greek</span></li>
+        <li><span class="metric-name">Piraeus Port rank (EU)</span><span class="metric-val">#1 container</span></li>
+        <li><span class="metric-name">Piraeus TEU throughput (2023)</span><span class="metric-val">5.6M TEU</span></li>
+      </ul>
+    </div>
+    <div class="spotlight-right">
+      <div class="chart-box-title">Greek fleet composition by type</div>
+      <div class="chart-box-headline" style="font-size: 1.3rem; margin-bottom: 1.5rem;">Vessel Types (% of tonnage)</div>
+      <div class="chart-wrap">
+        <canvas id="greekFleetChart"></canvas>
+      </div>
+      <p class="annotation">Data: Union of Greek Shipowners 2024 / Lloyds List</p>
+    </div>
+  </div>
+
+  <div class="chart-grid-2">
+    <div class="chart-box">
+      <div class="chart-box-title">Port infrastructure — Piraeus</div>
+      <div class="chart-box-headline">Piraeus TEU Throughput (2013–2023)</div>
+      <div class="chart-wrap">
+        <canvas id="piraeusTEUChart"></canvas>
+      </div>
+      <p class="annotation">COSCO acquired 51% stake in 2016, driving growth acceleration</p>
+    </div>
+    <div class="chart-box">
+      <div class="chart-box-title">Logistics performance</div>
+      <div class="chart-box-headline">LPI Score — Balkan & Mediterranean Region</div>
+      <div class="chart-wrap">
+        <canvas id="lpiChart"></canvas>
+      </div>
+      <p class="annotation">World Bank Logistics Performance Index 2023 (max: 5.0)</p>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ═══════════════════ EUROPE ═══════════════════ -->
+<section class="reveal">
+  <div class="section-label">European Logistics Landscape</div>
+  <h2>EUROPE <em>CONNECTED</em></h2>
+  <p class="section-desc">The EU logistics market is valued at €2.1 trillion, employing over 11 million people. The continent's trans-European transport network (TEN-T) spans 300,000 km of roads and 110,000 km of rail.</p>
+
+  <div class="kpi-row">
+    <div class="kpi-card" style="--w:88%; --c:#5aab7a">
+      <div class="kpi-icon">🇪🇺</div>
+      <div class="kpi-value">€2.1T</div>
+      <div class="kpi-label">EU logistics<br>market size</div>
+      <div class="kpi-change">▲ +5.3% YoY</div>
+    </div>
+    <div class="kpi-card" style="--w:70%; --c: var(--ocean)">
+      <div class="kpi-icon">🛤️</div>
+      <div class="kpi-value">300K km</div>
+      <div class="kpi-label">TEN-T road<br>network</div>
+      <div class="kpi-change">▲ +2.1% new</div>
+    </div>
+    <div class="kpi-card" style="--w:53%; --c: var(--rust)">
+      <div class="kpi-icon">👷</div>
+      <div class="kpi-value">11.2M</div>
+      <div class="kpi-label">People employed<br>in EU logistics</div>
+      <div class="kpi-change">▲ +3.6% YoY</div>
+    </div>
+    <div class="kpi-card" style="--w:38%; --c: var(--gold)">
+      <div class="kpi-icon">🌊</div>
+      <div class="kpi-value">3.8B t</div>
+      <div class="kpi-label">Cargo handled at<br>EU ports annually</div>
+      <div class="kpi-change">▲ +4.8% YoY</div>
+    </div>
+  </div>
+
+  <div class="chart-grid-2">
+    <div class="chart-box">
+      <div class="chart-box-title">Market leaders</div>
+      <div class="chart-box-headline">Top EU Logistics Markets (€ billions)</div>
+      <div class="chart-wrap-tall">
+        <canvas id="euMarketsChart"></canvas>
+      </div>
+    </div>
+    <div class="chart-box">
+      <div class="chart-box-title">Modal split EU freight</div>
+      <div class="chart-box-headline">Tonne-km by Transport Mode (2023)</div>
+      <div class="chart-wrap-tall">
+        <canvas id="modalSplitChart"></canvas>
+      </div>
+      <p class="annotation">Source: Eurostat freight transport statistics 2023</p>
+    </div>
+  </div>
+
+  <!-- Europe tables -->
+  <div class="chart-box" style="margin-top: 2px; border: 1px solid rgba(138,155,176,0.15);">
+    <div class="chart-box-title">Ranking</div>
+    <div class="chart-box-headline">Top European Container Ports — 2023</div>
+    <br>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Rank</th>
+          <th>Port</th>
+          <th>Country</th>
+          <th>TEU (millions)</th>
+          <th>Throughput Index</th>
+          <th>Specialisation</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="rank-num">01</span></td>
+          <td>Rotterdam</td>
+          <td>Netherlands</td>
+          <td><div class="bar-cell"><div class="mini-bar" style="width:100%"></div>14.6M</div></td>
+          <td><span class="tag tag-ocean">100</span></td>
+          <td>Container · Bulk · Energy</td>
+        </tr>
+        <tr>
+          <td><span class="rank-num">02</span></td>
+          <td>Antwerp-Bruges</td>
+          <td>Belgium</td>
+          <td><div class="bar-cell"><div class="mini-bar" style="width:81%"></div>11.9M</div></td>
+          <td><span class="tag tag-ocean">81</span></td>
+          <td>Container · Chemicals</td>
+        </tr>
+        <tr>
+          <td><span class="rank-num">03</span></td>
+          <td>Hamburg</td>
+          <td>Germany</td>
+          <td><div class="bar-cell"><div class="mini-bar" style="width:64%"></div>8.9M</div></td>
+          <td><span class="tag tag-ocean">61</span></td>
+          <td>Container · Auto</td>
+        </tr>
+        <tr>
+          <td><span class="rank-num">04</span></td>
+          <td>Valencia</td>
+          <td>Spain</td>
+          <td><div class="bar-cell"><div class="mini-bar" style="width:58%"></div>8.3M</div></td>
+          <td><span class="tag tag-green">57</span></td>
+          <td>Container · Ro-Ro</td>
+        </tr>
+        <tr>
+          <td><span class="rank-num">05</span></td>
+          <td>Piraeus</td>
+          <td>Greece</td>
+          <td><div class="bar-cell"><div class="mini-bar rust" style="width:39%"></div>5.6M</div></td>
+          <td><span class="tag tag-rust">38</span></td>
+          <td>Container · Cruises</td>
+        </tr>
+        <tr>
+          <td><span class="rank-num">06</span></td>
+          <td>Algeciras</td>
+          <td>Spain</td>
+          <td><div class="bar-cell"><div class="mini-bar" style="width:37%"></div>5.4M</div></td>
+          <td><span class="tag tag-green">37</span></td>
+          <td>Transshipment hub</td>
+        </tr>
+        <tr>
+          <td><span class="rank-num">07</span></td>
+          <td>Barcelona</td>
+          <td>Spain</td>
+          <td><div class="bar-cell"><div class="mini-bar" style="width:35%"></div>4.8M</div></td>
+          <td><span class="tag tag-green">33</span></td>
+          <td>Container · Cruise</td>
+        </tr>
+        <tr>
+          <td><span class="rank-num">08</span></td>
+          <td>Bremen/Bremerhaven</td>
+          <td>Germany</td>
+          <td><div class="bar-cell"><div class="mini-bar" style="width:33%"></div>4.7M</div></td>
+          <td><span class="tag tag-ocean">32</span></td>
+          <td>Container · Auto</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ═══════════════════ SECTORS ═══════════════════ -->
+<section class="reveal">
+  <div class="section-label">Cross-Sector Analysis</div>
+  <h2>ECONOMIC <em>SECTORS</em></h2>
+  <p class="section-desc">Logistics underpins every sector of economic activity. Below we examine freight intensity, logistics cost burden, and growth trajectories across key industries globally.</p>
+
+  <div class="chart-grid-2" style="margin-bottom: 2px;">
+    <div class="chart-box">
+      <div class="chart-box-title">Logistics cost as % of revenue</div>
+      <div class="chart-box-headline">By Industry Sector — Global 2024</div>
+      <br>
+      <div class="prog-list" id="logCostProgs"></div>
+      <p class="annotation" style="margin-top: 1.5rem">Higher logistics cost ratio = sector more logistics-intensive</p>
+    </div>
+    <div class="chart-box">
+      <div class="chart-box-title">Freight demand growth</div>
+      <div class="chart-box-headline">Sector Growth 2020–2024 (%)</div>
+      <div class="chart-wrap-tall">
+        <canvas id="sectorGrowthChart"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <div class="chart-grid-3">
+    <div class="chart-box">
+      <div class="chart-box-title">Energy & oil sector</div>
+      <div class="chart-box-headline">Tanker Fleet Utilization</div>
+      <div class="chart-wrap">
+        <canvas id="tankerChart"></canvas>
+      </div>
+    </div>
+    <div class="chart-box">
+      <div class="chart-box-title">Food & agriculture</div>
+      <div class="chart-box-headline">Global Grain Shipments (Mt)</div>
+      <div class="chart-wrap">
+        <canvas id="grainChart"></canvas>
+      </div>
+    </div>
+    <div class="chart-box">
+      <div class="chart-box-title">E-commerce logistics</div>
+      <div class="chart-box-headline">B2C Parcel Volume (billions)</div>
+      <div class="chart-wrap">
+        <canvas id="ecommerceChart"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- sector table -->
+  <div class="chart-box" style="margin-top: 2px; border: 1px solid rgba(138,155,176,0.15);">
+    <div class="chart-box-title">Sector deep-dive</div>
+    <div class="chart-box-headline">Logistics Requirements by Economic Sector</div>
+    <br>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Sector</th>
+          <th>Primary Mode</th>
+          <th>Annual Freight (Bn t-km)</th>
+          <th>Avg Lead Time</th>
+          <th>Cold Chain</th>
+          <th>Growth Outlook</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>🛢️ Energy / Petroleum</td>
+          <td><span class="tag tag-ocean">Tanker</span></td>
+          <td>4,200</td>
+          <td>15–30 days</td>
+          <td>—</td>
+          <td><span class="tag tag-gold">+4.2%</span></td>
+        </tr>
+        <tr>
+          <td>🌾 Agriculture / Food</td>
+          <td><span class="tag tag-ocean">Bulk vessel</span></td>
+          <td>2,800</td>
+          <td>10–25 days</td>
+          <td>Partial</td>
+          <td><span class="tag tag-green">+5.8%</span></td>
+        </tr>
+        <tr>
+          <td>🏗️ Construction / Minerals</td>
+          <td><span class="tag tag-ocean">Bulk vessel</span></td>
+          <td>3,500</td>
+          <td>12–35 days</td>
+          <td>—</td>
+          <td><span class="tag tag-gold">+3.1%</span></td>
+        </tr>
+        <tr>
+          <td>🚗 Automotive</td>
+          <td><span class="tag tag-rust">Ro-Ro · Rail</span></td>
+          <td>780</td>
+          <td>3–14 days</td>
+          <td>—</td>
+          <td><span class="tag tag-green">+6.7%</span></td>
+        </tr>
+        <tr>
+          <td>💊 Pharma / Healthcare</td>
+          <td><span class="tag tag-gold">Air freight</span></td>
+          <td>120</td>
+          <td>1–5 days</td>
+          <td>Required</td>
+          <td><span class="tag tag-green">+8.4%</span></td>
+        </tr>
+        <tr>
+          <td>📱 Electronics / Tech</td>
+          <td><span class="tag tag-gold">Air · Sea</span></td>
+          <td>650</td>
+          <td>2–10 days</td>
+          <td>—</td>
+          <td><span class="tag tag-green">+11.2%</span></td>
+        </tr>
+        <tr>
+          <td>🛒 Retail / E-commerce</td>
+          <td><span class="tag tag-rust">Road · Air</span></td>
+          <td>1,100</td>
+          <td>1–7 days</td>
+          <td>Partial</td>
+          <td><span class="tag tag-green">+18.3%</span></td>
+        </tr>
+        <tr>
+          <td>🧪 Chemicals</td>
+          <td><span class="tag tag-ocean">Tanker · Road</span></td>
+          <td>890</td>
+          <td>5–20 days</td>
+          <td>—</td>
+          <td><span class="tag tag-gold">+4.9%</span></td>
+        </tr>
+        <tr>
+          <td>🌿 Luxury / Fashion</td>
+          <td><span class="tag tag-gold">Air freight</span></td>
+          <td>48</td>
+          <td>1–3 days</td>
+          <td>—</td>
+          <td><span class="tag tag-green">+7.1%</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ═══════════════════ WORLD RANKINGS ═══════════════════ -->
+<section class="reveal">
+  <div class="section-label">Global Rankings</div>
+  <h2>WORLD <em>RANKINGS</em></h2>
+  <p class="section-desc">Comparative performance of nations in logistics, trade facilitation, port efficiency, and supply-chain reliability.</p>
+
+  <div class="chart-grid-2">
+    <div class="chart-box">
+      <div class="chart-box-title">LPI — top performers</div>
+      <div class="chart-box-headline">World Bank LPI 2023 (Score out of 5)</div>
+      <div class="chart-wrap-tall">
+        <canvas id="lpiWorldChart"></canvas>
+      </div>
+    </div>
+    <div class="chart-box">
+      <div class="chart-box-title">Container port rankings</div>
+      <div class="chart-box-headline">Top 10 World Ports — TEU 2023 (millions)</div>
+      <div class="chart-wrap-tall">
+        <canvas id="worldPortsChart"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <div class="chart-box" style="margin-top: 2px; border: 1px solid rgba(138,155,176,0.15);">
+    <div class="chart-box-title">Merchant fleet size</div>
+    <div class="chart-box-headline">Top Shipping Nations — Fleet Ownership (% World DWT, 2024)</div>
+    <br>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Rank</th>
+          <th>Country</th>
+          <th>Fleet Ownership (DWT millions)</th>
+          <th>% World Total</th>
+          <th>Fleet profile</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="rank-num">01</span></td>
+          <td>🇨🇳 China</td>
+          <td><div class="bar-cell"><div class="mini-bar" style="width:100%"></div>310M</div></td>
+          <td>18.2%</td>
+          <td>Diversified</td>
+        </tr>
+        <tr>
+          <td><span class="rank-num">02</span></td>
+          <td>🇯🇵 Japan</td>
+          <td><div class="bar-cell"><div class="mini-bar" style="width:74%"></div>218M</div></td>
+          <td>12.8%</td>
+          <td>Tanker · Bulk</td>
+        </tr>
+        <tr>
+          <td><span class="rank-num">03</span></td>
+          <td>🇬🇷 Greece</td>
+          <td><div class="bar-cell"><div class="mini-bar rust" style="width:66%"></div>190M</div></td>
+          <td>11.2%</td>
+          <td>Tanker dominant</td>
+        </tr>
+        <tr>
+          <td><span class="rank-num">04</span></td>
+          <td>🇸🇬 Singapore</td>
+          <td><div class="bar-cell"><div class="mini-bar gold" style="width:44%"></div>128M</div></td>
+          <td>7.5%</td>
+          <td>Container · Tanker</td>
+        </tr>
+        <tr>
+          <td><span class="rank-num">05</span></td>
+          <td>🇰🇷 South Korea</td>
+          <td><div class="bar-cell"><div class="mini-bar" style="width:37%"></div>108M</div></td>
+          <td>6.3%</td>
+          <td>Container · LNG</td>
+        </tr>
+        <tr>
+          <td><span class="rank-num">06</span></td>
+          <td>🇩🇪 Germany</td>
+          <td><div class="bar-cell"><div class="mini-bar" style="width:33%"></div>97M</div></td>
+          <td>5.7%</td>
+          <td>Container</td>
+        </tr>
+        <tr>
+          <td><span class="rank-num">07</span></td>
+          <td>🇳🇴 Norway</td>
+          <td><div class="bar-cell"><div class="mini-bar" style="width:29%"></div>86M</div></td>
+          <td>5.1%</td>
+          <td>Offshore · Tanker</td>
+        </tr>
+        <tr>
+          <td><span class="rank-num">08</span></td>
+          <td>🇺🇸 USA</td>
+          <td><div class="bar-cell"><div class="mini-bar" style="width:26%"></div>76M</div></td>
+          <td>4.5%</td>
+          <td>Diversified</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ═══════════════════ SUSTAINABILITY ═══════════════════ -->
+<section class="reveal">
+  <div class="section-label">Green Transition</div>
+  <h2>SUSTAINABLE <em>LOGISTICS</em></h2>
+  <p class="section-desc">The logistics industry contributes ~8% of global CO₂ emissions. The IMO targets a 50% GHG reduction by 2050 from 2008 baseline. Green corridors, LNG, methanol, and ammonia fuels are reshaping fleet economics.</p>
+
+  <div class="chart-grid-3">
+    <div class="chart-box">
+      <div class="chart-box-title">CO₂ by transport mode</div>
+      <div class="chart-box-headline">g CO₂ per tonne-km</div>
+      <div class="chart-wrap">
+        <canvas id="co2Chart"></canvas>
+      </div>
+    </div>
+    <div class="chart-box">
+      <div class="chart-box-title">Green fuel investment</div>
+      <div class="chart-box-headline">Orderbook by Fuel Type 2024 (%)</div>
+      <div class="chart-wrap">
+        <canvas id="greenFuelChart"></canvas>
+      </div>
+    </div>
+    <div class="chart-box">
+      <div class="chart-box-title">EU ETS shipping</div>
+      <div class="chart-box-headline">Projected Carbon Costs (€M/yr)</div>
+      <div class="chart-wrap">
+        <canvas id="etsChart"></canvas>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ FOOTER ═══════════════════ -->
+<footer class="report-footer">
+  <div>
+    <div class="footer-brand">LOGISTICS<span>360</span></div>
+    <div class="annotation" style="margin-top: 0.5rem; max-width: 480px">Data sourced from: UNCTAD Maritime Transport Review 2023, World Bank LPI 2023, Drewry Container Freight, Eurostat, Union of Greek Shipowners, COSCO Annual Reports, IMO GHG Studies, Statista 2024, IHS Markit.</div>
+  </div>
+  <div class="footer-meta">
+    GLOBAL LOGISTICS INTELLIGENCE REPORT<br>
+    DATA REFERENCE YEAR: 2023 – 2024<br>
+    COMPILED: APRIL 2025<br>
+    ALL FIGURES IN USD UNLESS STATED
+  </div>
+</footer>
+
+<script>
+// ──────────────────── CHART DEFAULTS ──────────────────────
+Chart.defaults.color = 'rgba(138,155,176,0.8)';
+Chart.defaults.borderColor = 'rgba(138,155,176,0.1)';
+Chart.defaults.font.family = "'IBM Plex Mono', monospace";
+Chart.defaults.font.size = 11;
+
+const RUST = '#c94a2b';
+const OCEAN = '#1a4d6e';
+const GOLD = '#d4a017';
+const STEEL = '#8a9bb0';
+const GREEN = '#5aab7a';
+const PALE = 'rgba(245,240,232,0.7)';
+
+function makeGradient(ctx, c1, c2) {
+  const g = ctx.createLinearGradient(0, 0, 0, 300);
+  g.addColorStop(0, c1);
+  g.addColorStop(1, c2);
+  return g;
+}
+
+const years = ['2014','2015','2016','2017','2018','2019','2020','2021','2022','2023','2024'];
+
+// ── Fleet Trend ───────────────────────────────────────────
+(function() {
+  const ctx = document.getElementById('fleetTrendChart').getContext('2d');
+  new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: years,
+      datasets: [{
+        label: 'World Fleet DWT (millions)',
+        data: [1750, 1790, 1840, 1900, 1960, 2000, 2020, 2080, 2180, 2280, 2370],
+        borderColor: RUST,
+        backgroundColor: 'rgba(201,74,43,0.08)',
+        borderWidth: 2,
+        fill: true,
+        tension: 0.4,
+        pointRadius: 3,
+        pointBackgroundColor: RUST,
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { grid: { color: 'rgba(138,155,176,0.07)' } },
+        y: { grid: { color: 'rgba(138,155,176,0.07)' }, min: 1600 }
+      }
+    }
+  });
+})();
+
+// ── Cargo Type (Doughnut) ─────────────────────────────────
+(function() {
+  const ctx = document.getElementById('cargoTypeChart').getContext('2d');
+  new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+      labels: ['Bulk solids','Tanker oil','Container','General cargo','LNG/LPG','Other'],
+      datasets: [{
+        data: [44, 28, 17, 5, 4, 2],
+        backgroundColor: [OCEAN, RUST, GOLD, GREEN, '#7dc2e8', STEEL],
+        borderWidth: 0,
+        hoverOffset: 8,
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      cutout: '62%',
+      plugins: {
+        legend: {
+          position: 'right',
+          labels: { boxWidth: 10, padding: 12 }
+        }
+      }
+    }
+  });
+})();
+
+// ── Top Ports TEU ─────────────────────────────────────────
+(function() {
+  const ctx = document.getElementById('portsTEUChart').getContext('2d');
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['Shanghai','Singapore','Ningbo','Shenzhen','Guangzhou','Qingdao','Busan','Tianjin','Hong Kong','Rotterdam'],
+      datasets: [{
+        data: [49.2, 38.8, 35.3, 30.0, 25.8, 25.5, 22.6, 21.6, 16.6, 14.6],
+        backgroundColor: [RUST,RUST,OCEAN,OCEAN,OCEAN,OCEAN,GOLD,OCEAN,OCEAN,GREEN],
+        borderWidth: 0, borderRadius: 2
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      indexAxis: 'y',
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { grid: { color: 'rgba(138,155,176,0.07)' } },
+        y: { grid: { display: false } }
+      }
+    }
+  });
+})();
+
+// ── Shipping Rates ────────────────────────────────────────
+(function() {
+  const ctx = document.getElementById('shippingRatesChart').getContext('2d');
+  new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: ['Q1 20','Q2 20','Q3 20','Q4 20','Q1 21','Q2 21','Q3 21','Q4 21','Q1 22','Q2 22','Q3 22','Q4 22','Q1 23','Q2 23','Q3 23','Q4 23','Q1 24'],
+      datasets: [{
+        label: 'WCI $/40ft',
+        data: [1350,1200,1700,2600,3800,6400,9400,9800,8200,6800,5600,3200,2100,1700,1600,2200,3400],
+        borderColor: GOLD,
+        backgroundColor: 'rgba(212,160,23,0.06)',
+        borderWidth: 2,
+        fill: true,
+        tension: 0.4,
+        pointRadius: 0,
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { grid: { display: false }, ticks: { maxTicksLimit: 6 } },
+        y: { grid: { color: 'rgba(138,155,176,0.07)' } }
+      }
+    }
+  });
+})();
+
+// ── Flag State ────────────────────────────────────────────
+(function() {
+  const ctx = document.getElementById('flagStateChart').getContext('2d');
+  new Chart(ctx, {
+    type: 'pie',
+    data: {
+      labels: ['Panama','Liberia','Marshall Islands','Bahamas','Hong Kong','Singapore','Other'],
+      datasets: [{
+        data: [18, 12, 11, 8, 6, 5, 40],
+        backgroundColor: [RUST, OCEAN, GOLD, GREEN, '#7dc2e8', '#e87040', STEEL],
+        borderWidth: 0,
+        hoverOffset: 6,
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { position: 'bottom', labels: { boxWidth: 8, padding: 8, font: { size: 9 } } }
+      }
+    }
+  });
+})();
+
+// ── Greek Fleet ───────────────────────────────────────────
+(function() {
+  const ctx = document.getElementById('greekFleetChart').getContext('2d');
+  new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+      labels: ['Tankers (crude/product)','Bulk carriers','Container','LNG/LPG','Chemical tankers','Ro-Ro / Other'],
+      datasets: [{
+        data: [38, 30, 12, 9, 6, 5],
+        backgroundColor: [RUST, OCEAN, GOLD, '#7dc2e8', GREEN, STEEL],
+        borderWidth: 0,
+        hoverOffset: 8
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      cutout: '58%',
+      plugins: {
+        legend: { position: 'bottom', labels: { boxWidth: 9, padding: 10, font: { size: 10 } } }
+      }
+    }
+  });
+})();
+
+// ── Piraeus TEU ───────────────────────────────────────────
+(function() {
+  const ctx = document.getElementById('piraeusTEUChart').getContext('2d');
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['2013','2014','2015','2016','2017','2018','2019','2020','2021','2022','2023'],
+      datasets: [{
+        label: 'TEU millions',
+        data: [2.52, 2.69, 2.61, 3.73, 4.15, 4.91, 5.65, 5.44, 5.31, 5.17, 5.60],
+        backgroundColor: years => {
+          return ['2013','2014','2015'].includes(years) ?
+            'rgba(26,77,110,0.6)' : RUST;
+        },
+        borderWidth: 0,
+        borderRadius: 2
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { grid: { display: false } },
+        y: { grid: { color: 'rgba(138,155,176,0.07)' }, min: 2 }
+      }
+    }
+  });
+})();
+
+// ── LPI Mediterranean ─────────────────────────────────────
+(function() {
+  const ctx = document.getElementById('lpiChart').getContext('2d');
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['Italy','Spain','Croatia','Greece','Turkey','Bulgaria','Romania','Serbia','N.Macedonia'],
+      datasets: [{
+        data: [3.88, 3.72, 3.51, 3.28, 3.42, 3.14, 3.26, 3.05, 2.89],
+        backgroundColor: (ctx) => ctx.raw >= 3.5 ? GREEN : ctx.raw >= 3.2 ? GOLD : RUST,
+        borderWidth: 0,
+        borderRadius: 2
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      indexAxis: 'y',
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { grid: { color: 'rgba(138,155,176,0.07)' }, min: 2.5, max: 4.2 },
+        y: { grid: { display: false } }
+      }
+    }
+  });
+})();
+
+// ── EU Markets ────────────────────────────────────────────
+(function() {
+  const ctx = document.getElementById('euMarketsChart').getContext('2d');
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['Germany','France','Netherlands','UK','Italy','Spain','Belgium','Poland','Sweden','Greece'],
+      datasets: [{
+        data: [420, 290, 280, 260, 195, 170, 165, 110, 80, 22],
+        backgroundColor: (c) => c.dataIndex === 9 ? RUST : OCEAN,
+        borderWidth: 0,
+        borderRadius: 2
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { grid: { display: false }, ticks: { maxRotation: 30 } },
+        y: { grid: { color: 'rgba(138,155,176,0.07)' }, title: { display: true, text: '€ billions' } }
+      }
+    }
+  });
+})();
+
+// ── Modal Split ───────────────────────────────────────────
+(function() {
+  const ctx = document.getElementById('modalSplitChart').getContext('2d');
+  new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+      labels: ['Road','Inland waterway','Rail','Maritime short-sea','Pipeline','Air'],
+      datasets: [{
+        data: [49.5, 7.2, 18.3, 22.8, 1.8, 0.4],
+        backgroundColor: [RUST, OCEAN, GOLD, GREEN, STEEL, '#e87040'],
+        borderWidth: 0,
+        hoverOffset: 8
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      cutout: '55%',
+      plugins: {
+        legend: { position: 'bottom', labels: { boxWidth: 9, padding: 10, font: { size: 10 } } }
+      }
+    }
+  });
+})();
+
+// ── Sector Growth ─────────────────────────────────────────
+(function() {
+  const ctx = document.getElementById('sectorGrowthChart').getContext('2d');
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['E-commerce','Electronics','Pharma','Automotive','Food / Agri','Energy','Construction','Chemicals','Fashion'],
+      datasets: [{
+        data: [74, 45, 34, 27, 23, 17, 13, 20, 29],
+        backgroundColor: [RUST, GOLD, GREEN, OCEAN, '#7dc2e8', STEEL, '#e87040', GREEN, GOLD],
+        borderWidth: 0,
+        borderRadius: 2
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      indexAxis: 'y',
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { grid: { color: 'rgba(138,155,176,0.07)' }, title: { display: true, text: '% cumulative growth 2020–2024' } },
+        y: { grid: { display: false } }
+      }
+    }
+  });
+})();
+
+// ── Tanker ────────────────────────────────────────────────
+(function() {
+  const ctx = document.getElementById('tankerChart').getContext('2d');
+  new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: ['2018','2019','2020','2021','2022','2023','2024'],
+      datasets: [
+        { label: 'VLCC', data: [82,86,95,74,89,91,88], borderColor: RUST, borderWidth: 2, tension: 0.4, pointRadius: 3, fill: false },
+        { label: 'Aframax', data: [79,83,91,78,93,92,90], borderColor: OCEAN, borderWidth: 2, tension: 0.4, pointRadius: 3, fill: false },
+        { label: 'Suezmax', data: [77,80,88,72,87,90,87], borderColor: GOLD, borderWidth: 2, tension: 0.4, pointRadius: 3, fill: false }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { position: 'bottom', labels: { boxWidth: 8, padding: 8 } } },
+      scales: {
+        x: { grid: { display: false } },
+        y: { grid: { color: 'rgba(138,155,176,0.07)' }, min: 60, title: { display: true, text: '% utilization' } }
+      }
+    }
+  });
+})();
+
+// ── Grain ─────────────────────────────────────────────────
+(function() {
+  const ctx = document.getElementById('grainChart').getContext('2d');
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['2018','2019','2020','2021','2022','2023','2024e'],
+      datasets: [{
+        label: 'Million tonnes',
+        data: [450, 460, 470, 495, 480, 492, 510],
+        backgroundColor: GOLD,
+        borderWidth: 0,
+        borderRadius: 2
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { grid: { display: false } },
+        y: { grid: { color: 'rgba(138,155,176,0.07)' }, min: 400 }
+      }
+    }
+  });
+})();
+
+// ── E-commerce ───────────────────────────────────────────
+(function() {
+  const ctx = document.getElementById('ecommerceChart').getContext('2d');
+  new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: ['2018','2019','2020','2021','2022','2023','2024e'],
+      datasets: [{
+        data: [0.87, 1.10, 1.62, 2.19, 2.63, 3.00, 3.54],
+        borderColor: GREEN,
+        backgroundColor: 'rgba(90,171,122,0.08)',
+        borderWidth: 2.5,
+        fill: true,
+        tension: 0.4,
+        pointRadius: 4,
+        pointBackgroundColor: GREEN
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { grid: { display: false } },
+        y: { grid: { color: 'rgba(138,155,176,0.07)' }, title: { display: true, text: 'billion parcels' } }
+      }
+    }
+  });
+})();
+
+// ── CO2 ───────────────────────────────────────────────────
+(function() {
+  const ctx = document.getElementById('co2Chart').getContext('2d');
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['Air','Road HGV','Rail','Sea (container)','Sea (bulk)','Pipeline'],
+      datasets: [{
+        data: [435, 62, 18, 14, 8, 3],
+        backgroundColor: [RUST, GOLD, GREEN, OCEAN, '#7dc2e8', STEEL],
+        borderWidth: 0,
+        borderRadius: 2
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      indexAxis: 'y',
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { grid: { color: 'rgba(138,155,176,0.07)' } },
+        y: { grid: { display: false } }
+      }
+    }
+  });
+})();
+
+// ── Green Fuel ────────────────────────────────────────────
+(function() {
+  const ctx = document.getElementById('greenFuelChart').getContext('2d');
+  new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+      labels: ['Conventional HFO','LNG','Methanol','Ammonia ready','Dual-fuel','Other alt.'],
+      datasets: [{
+        data: [38, 27, 14, 9, 8, 4],
+        backgroundColor: [STEEL, OCEAN, GOLD, GREEN, RUST, '#7dc2e8'],
+        borderWidth: 0,
+        hoverOffset: 6
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      cutout: '55%',
+      plugins: {
+        legend: { position: 'bottom', labels: { boxWidth: 9, padding: 8, font: { size: 9 } } }
+      }
+    }
+  });
+})();
+
+// ── ETS ───────────────────────────────────────────────────
+(function() {
+  const ctx = document.getElementById('etsChart').getContext('2d');
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['2024','2025','2026','2027','2028','2030'],
+      datasets: [{
+        label: '€M carbon costs',
+        data: [850, 1400, 2200, 3100, 3900, 6200],
+        backgroundColor: (c) => `rgba(201,74,43,${0.4 + c.dataIndex * 0.1})`,
+        borderWidth: 0,
+        borderRadius: 2
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { grid: { display: false } },
+        y: { grid: { color: 'rgba(138,155,176,0.07)' } }
+      }
+    }
+  });
+})();
+
+// ── LPI World ─────────────────────────────────────────────
+(function() {
+  const ctx = document.getElementById('lpiWorldChart').getContext('2d');
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['Singapore','Finland','Denmark','Germany','Netherlands','Switzerland','Austria','Belgium','Japan','Sweden'],
+      datasets: [{
+        data: [4.30, 4.20, 4.18, 4.05, 4.02, 3.96, 3.91, 3.88, 3.87, 3.84],
+        backgroundColor: OCEAN,
+        borderWidth: 0,
+        borderRadius: 2
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      indexAxis: 'y',
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { grid: { color: 'rgba(138,155,176,0.07)' }, min: 3.5, max: 4.5 },
+        y: { grid: { display: false } }
+      }
+    }
+  });
+})();
+
+// ── World Ports ───────────────────────────────────────────
+(function() {
+  const ctx = document.getElementById('worldPortsChart').getContext('2d');
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['Shanghai','Singapore','Ningbo','Shenzhen','Guangzhou','Qingdao','Busan','Tianjin','HK','Rotterdam'],
+      datasets: [{
+        data: [49.2, 38.8, 35.3, 30.0, 25.8, 25.5, 22.6, 21.6, 16.6, 14.6],
+        backgroundColor: [RUST,OCEAN,OCEAN,OCEAN,OCEAN,OCEAN,GOLD,OCEAN,STEEL,GREEN],
+        borderWidth: 0,
+        borderRadius: 2
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { grid: { display: false }, ticks: { maxRotation: 30, font: { size: 9 } } },
+        y: { grid: { color: 'rgba(138,155,176,0.07)' }, title: { display: true, text: 'million TEU' } }
+      }
+    }
+  });
+})();
+
+// ──────────────────── PROGRESS BARS ──────────────────────
+const sectors = [
+  { name: 'Retail / FMCG', pct: 18, color: RUST },
+  { name: 'Pharmaceuticals', pct: 16, color: GREEN },
+  { name: 'Agriculture / Food', pct: 14, color: GOLD },
+  { name: 'Electronics / Tech', pct: 13, color: OCEAN },
+  { name: 'Chemicals', pct: 12, color: '#7dc2e8' },
+  { name: 'Automotive', pct: 10, color: GOLD },
+  { name: 'Construction / Minerals', pct: 9, color: STEEL },
+  { name: 'Energy / Oil', pct: 7, color: RUST },
+  { name: 'Luxury / Fashion', pct: 6, color: GREEN },
+];
+
+const container = document.getElementById('logCostProgs');
+sectors.forEach(s => {
+  const div = document.createElement('div');
+  div.className = 'prog-item';
+  div.innerHTML = `
+    <div class="prog-header">
+      <span>${s.name}</span>
+      <span class="pct">${s.pct}%</span>
+    </div>
+    <div class="prog-track">
+      <div class="prog-fill" style="background:${s.color}" data-w="${s.pct * 5.5}"></div>
+    </div>
+  `;
+  container.appendChild(div);
+});
+
+// ──────────────────── SCROLL REVEAL ──────────────────────
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      // animate progress bars when visible
+      e.target.querySelectorAll('.prog-fill').forEach(bar => {
+        bar.style.width = bar.dataset.w + '%';
+      });
+    }
+  });
+}, { threshold: 0.08 });
+
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
